@@ -1,0 +1,1776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casting Manager 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #1a1a1a;
+            padding: 1%;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 20px 1%;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+        
+        .subtitle {
+            font-size: 0.75rem;
+            opacity: 0.9;
+            letter-spacing: 2px;
+        }
+        
+        nav {
+            display: flex;
+            overflow-x: auto;
+            background: #f8f9fa;
+            padding: 1%;
+            gap: 8px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        nav::-webkit-scrollbar {
+            height: 3px;
+        }
+        
+        nav::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 10px;
+        }
+        
+        .tab-btn {
+            padding: 10px 16px;
+            border: none;
+            background: white;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s;
+            color: #333;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .tab-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(102, 126, 234, 0.4);
+        }
+        
+        .content {
+            padding: 1%;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        
+        .content::-webkit-scrollbar {
+            width: 5px;
+        }
+        
+        .content::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 10px;
+        }
+        
+        .section {
+            display: none;
+            animation: fadeIn 0.4s;
+        }
+        
+        .section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        h2 {
+            font-size: 1.1rem;
+            color: #2a5298;
+            margin: 15px 1% 10px 1%;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #667eea;
+        }
+        
+        .step, .skill-item {
+            background: #f8f9fa;
+            padding: 12px 1%;
+            margin: 8px 1%;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s;
+        }
+        
+        .step:hover, .skill-item:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .step-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 24px;
+            font-weight: bold;
+            font-size: 0.75rem;
+            margin-right: 8px;
+        }
+        
+        .step-title {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: #1e3c72;
+            margin-bottom: 5px;
+        }
+        
+        .step-desc {
+            font-size: 0.8rem;
+            color: #555;
+            line-height: 1.5;
+            margin: 1%;
+        }
+        
+        .skill-level {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            margin: 1%;
+        }
+        
+        .essential {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+        
+        .advanced {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+        
+        .expert {
+            background: #fff3e0;
+            color: #e65100;
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, #ffd89b 0%, #19547b 100%);
+            color: white;
+            padding: 15px 1%;
+            border-radius: 10px;
+            margin: 10px 1%;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+        
+        .icon {
+            margin-right: 5px;
+        }
+        
+        footer {
+            background: #1e3c72;
+            color: white;
+            text-align: center;
+            padding: 15px 1%;
+            font-size: 0.7rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CASTING MANAGER</h1>
+            <div class="subtitle">PROFESSIONAL GUIDE 2026</div>
+        </header>
+        
+        <nav>
+            <button class="tab-btn active" onclick="showSection('instructions')">📋 Instructions</button>
+            <button class="tab-btn" onclick="showSection('beginners')">🌱 Beginners</button>
+            <button class="tab-btn" onclick="showSection('steps')">🎯 Step-by-Step</button>
+            <button class="tab-btn" onclick="showSection('skills')">⭐ Skills</button>
+            <button class="tab-btn" onclick="showSection('skills-dev')">📚 Skills Dev</button>
+            <button class="tab-btn" onclick="showSection('terminology')">📖 Glossary</button>
+            <button class="tab-btn" onclick="showSection('quick-ref')">⚡ Quick Ref</button>
+            <button class="tab-btn" onclick="showSection('tutorials')">📺 Tutorials</button>
+            <button class="tab-btn" onclick="showSection('expertise')">🎭 Expertise</button>
+            <button class="tab-btn" onclick="showSection('va-guide')">💼 VA Guide</button>
+        </nav>
+        
+        <div class="content">
+            <div id="instructions" class="section active">
+                <h2>Getting Started</h2>
+                <div class="highlight">
+                    <strong>🌍 GCC Time Zone Focus (Dubai)</strong><br>
+                    This guide is optimized for casting managers operating in the Gulf Cooperation Council region, with emphasis on international talent coordination and live entertainment production.
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">📌</span>Role Overview</div>
+                    <div class="step-desc">As a Casting Manager, you orchestrate the entire talent acquisition process from initial concept to final performance. You're the bridge between creative vision and practical execution.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">🎯</span>Core Responsibilities</div>
+                    <div class="step-desc">Manage artist relationships, negotiate contracts, control budgets, coordinate international logistics, and oversee live show production across multiple venues and events.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">⏰</span>Time Management</div>
+                    <div class="step-desc">Operating in GCC time zones requires coordination with international talent across multiple time zones. Plan communications during overlapping business hours and use asynchronous tools effectively.</div>
+                </div>
+            </div>
+            
+            <div id="beginners" class="section">
+                <h2>Breaking Into Casting Management</h2>
+                
+                <div class="highlight">
+                    <strong>🎯 Your Journey Starts Here</strong><br>
+                    Casting management is an exciting career combining creativity, business acumen, and people skills. This guide will help you navigate your first steps into the industry.
+                </div>
+                
+                <h2>Understanding the Industry</h2>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">🎬</span>What Does a Casting Manager Do?</div>
+                    <div class="step-desc">You'll find and hire performers for events, shows, films, commercials, and productions. This involves scouting talent, organizing auditions, negotiating contracts, and coordinating logistics. Think of yourself as a talent matchmaker between creative visions and performing artists.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">🌟</span>Industry Sectors in GCC</div>
+                    <div class="step-desc">Major opportunities exist in: Corporate events and conferences, luxury hotel entertainment, theme parks (Dubai Parks, Warner Bros), concerts and festivals, TV commercials and productions, fashion shows, cruise ship entertainment, and Expo-style events.</div>
+                </div>
+                
+                <h2>Entry-Level Career Path</h2>
+                
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <div class="step-title">Internships & Assistant Roles</div>
+                    <div class="step-desc">Start as a casting assistant, production intern, or talent coordinator assistant. Gain hands-on experience with auditions, database management, and artist coordination. Expect 6-12 months in this phase learning the basics.</div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <div class="step-title">Junior Coordinator (1-2 years)</div>
+                    <div class="step-desc">Handle smaller projects independently, assist on larger productions, manage talent databases, coordinate audition logistics, and process contracts under supervision. Build your network actively during this phase.</div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <div class="step-title">Casting Coordinator (2-4 years)</div>
+                    <div class="step-desc">Lead casting for medium-sized projects, negotiate basic contracts, manage budgets up to mid-range, supervise junior staff, and develop relationships with agents and talent. This is where you prove your capabilities.</div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <div class="step-title">Casting Manager (4+ years)</div>
+                    <div class="step-desc">Oversee major productions, lead casting teams, negotiate high-value contracts, manage large budgets, and make final talent decisions. You've arrived at professional status with industry recognition.</div>
+                </div>
+                
+                <h2>Building Your Foundation</h2>
+                
+                <div class="skill-item">
+                    <span class="skill-level essential">MONTH 1-3</span>
+                    <div class="step-title">Learn the Landscape</div>
+                    <div class="step-desc">Attend live shows and events in your area. Follow entertainment news and industry publications. Join casting and entertainment groups on LinkedIn and Facebook. Watch behind-the-scenes content about casting processes. Start building a list of local production companies and talent agencies.</div>
+                </div>
+                
+                <div class="skill-item">
+                    <span class="skill-level essential">MONTH 1-3</span>
+                    <div class="step-title">Develop Core Skills</div>
+                    <div class="step-desc">Master Microsoft Office and Google Workspace. Learn basic contract terms and entertainment law. Practice professional email writing. Study negotiation basics through online courses. Understand budgeting fundamentals using spreadsheets.</div>
+                </div>
+                
+                <div class="skill-item">
+                    <span class="skill-level advanced">MONTH 4-6</span>
+                    <div class="step-title">Get Practical Experience</div>
+                    <div class="step-desc">Volunteer for local theater productions or community events. Offer to help organize talent for charity shows. Shadow an established casting professional if possible. Create mock casting projects for practice. Document everything you learn in a portfolio.</div>
+                </div>
+                
+                <div class="skill-item">
+                    <span class="skill-level advanced">MONTH 4-6</span>
+                    <div class="step-title">Build Your Network</div>
+                    <div class="step-desc">Connect with local talent agents and managers. Attend industry mixers and networking events. Join professional organizations like event management associations. Reach out to casting offices offering assistance. Build relationships with venue managers and production teams.</div>
+                </div>
+                
+                <h2>Your First Portfolio</h2>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">📁</span>What to Include</div>
+                    <div class="step-desc">Resume highlighting any entertainment, event, or coordination experience. Examples of any casting work (even volunteer projects). Spreadsheets showing budget management skills. Communication samples (professional emails, proposals). References from anyone in the industry. LinkedIn profile optimized for casting roles.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">💼</span>Landing Your First Job</div>
+                    <div class="step-desc">Target entry positions: casting assistant, talent coordinator, production assistant, event coordinator. Apply to production companies, event agencies, entertainment venues, talent agencies, and corporate event departments. Tailor each application to the specific role and company.</div>
+                </div>
+                
+                <h2>Common Beginner Mistakes to Avoid</h2>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">❌</span>Over-promising on Timelines</div>
+                    <div class="step-desc">Don't commit to unrealistic deadlines to impress clients. Talent booking takes time—visa delays, scheduling conflicts happen. Always build buffer time into your estimates. Under-promise and over-deliver is the golden rule.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">❌</span>Neglecting Contracts</div>
+                    <div class="step-desc">Never proceed without written agreements, even for small gigs. Verbal promises lead to disputes and payment issues. Always get everything in writing before any money or commitments change hands. Learn contract basics early—this protects everyone.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">❌</span>Poor Communication</div>
+                    <div class="step-desc">Respond to emails within 24 hours, even if just acknowledging receipt. Keep all parties updated on progress and changes. Never assume people know what you're thinking or doing. Over-communicate rather than under-communicate, especially with international talent.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">❌</span>Burning Bridges</div>
+                    <div class="step-desc">The entertainment industry is surprisingly small. Today's difficult client could be tomorrow's big opportunity. Always maintain professionalism even when declining work or ending relationships. Your reputation is everything in this business.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">❌</span>Ignoring Budget Realities</div>
+                    <div class="step-desc">Don't pitch talent that's way beyond the client's budget. Understand market rates for different talent levels. Always have backup options at various price points. Learn to read budget signals and work within constraints creatively.</div>
+                </div>
+                
+                <h2>First 90 Days Action Plan</h2>
+                
+                <div class="skill-item">
+                    <span class="skill-level essential">DAYS 1-30</span>
+                    <div class="step-title">Immersion & Learning</div>
+                    <div class="step-desc">Study casting terminology and industry standards. Set up professional social media presence. Research GCC entertainment scene thoroughly. Create a database template for tracking talent. Subscribe to industry newsletters and publications. Attend at least 5 live shows or events.</div>
+                </div>
+                
+                <div class="skill-item">
+                    <span class="skill-level essential">DAYS 31-60</span>
+                    <div class="step-title">Networking & Connections</div>
+                    <div class="step-desc">Reach out to 20 industry professionals on LinkedIn. Attend 2-3 networking events or workshops. Volunteer for one small production or event. Start informational interviews with casting professionals. Join relevant Facebook groups and online communities. Begin building your contact database.</div>
+                </div>
+                
+                <div class="skill-item">
+                    <span class="skill-level advanced">DAYS 61-90</span>
+                    <div class="step-title">Application & Action</div>
+                    <div class="step-desc">Apply to at least 15 relevant positions. Create a mock casting project demonstrating your skills. Develop a portfolio website or presentation. Follow up with all networking contacts made. Seek feedback on your approach from mentors. Set clear 6-month career goals based on what you've learned.</div>
+                </div>
+                
+                <div class="highlight">
+                    <strong>💪 Mindset for Success:</strong> Be patient—this is a relationship-driven industry that takes time. Stay persistent through rejections. Be curious and always learning. Show reliability in small tasks to earn bigger opportunities. Remember, every expert was once a beginner!
+                </div>
+            </div>
+            
+            <div id="steps" class="section">
+                <h2>Complete Workflow</h2>
+                
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <div class="step-title">Project Brief & Requirements</div>
+                    <div class="step-desc">Meet with producers and creative directors to understand vision, budget parameters, timeline, and specific talent requirements. Document all specifications clearly.</div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <div class="step-title">Talent Research & Outreach</div>
+                    <div class="step-desc">Identify potential artists matching project needs. Review portfolios, past performances, and availability. Initiate contact through agents or direct outreach.</div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <div class="step-title">Auditions & Selection</div>
+                    <div class="step-desc">Organize virtual or in-person auditions. Evaluate performances against project criteria. Present shortlisted candidates to decision-makers with recommendations.</div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <div class="step-title">Contract Negotiation</div>
+                    <div class="step-desc">Negotiate terms including fees, travel, accommodation, rehearsal schedules, and performance requirements. Ensure legal compliance and budget adherence.</div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">5</span>
+                    <div class="step-title">Logistics Coordination</div>
+                    <div class="step-desc">Arrange international travel, visas, work permits, accommodation, ground transportation, and technical requirements. Coordinate with local teams in GCC region.</div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">6</span>
+                    <div class="step-title">Pre-Production Support</div>
+                    <div class="step-desc">Schedule and oversee rehearsals, technical run-throughs, costume fittings, and media requirements. Ensure all parties are aligned on expectations.</div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">7</span>
+                    <div class="step-title">Show Day Management</div>
+                    <div class="step-desc">Be on-site to manage artist needs, troubleshoot issues, coordinate with production team, and ensure smooth performance execution from arrival to departure.</div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">8</span>
+                    <div class="step-title">Post-Event Wrap-up</div>
+                    <div class="step-desc">Process final payments, gather feedback, document lessons learned, maintain artist relationships for future projects, and archive all documentation.</div>
+                </div>
+            </div>
+            
+            <div id="skills" class="section">
+                <h2>Essential Skills</h2>
+                
+                <div class="skill-item">
+                    <span class="skill-level essential">ESSENTIAL</span>
+                    <div class="step-title">Communication Excellence</div>
+                    <div class="step-desc">Clear, professional communication across cultures and languages. Ability to negotiate diplomatically and manage expectations on all sides.</div>
+                </div>
+                
+                <div class="skill-item">
+                    <span class="skill-level essential">ESSENTIAL</span>
+                    <div class="step-title">Budget Management</div>
+                    <div class="step-desc">Track expenses, negotiate within constraints, identify cost-saving opportunities without compromising quality. Proficiency with financial software and reporting.</div>
+                </div>
+                
+                <div class="skill-item">
+                    <span class="skill-level advanced">ADVANCED</span>
+                    <div class="step-title">Contract Law Knowledge</div>
+                    <div class="step-desc">Understanding of entertainment contracts, international labor laws, intellectual property rights, and liability issues specific to GCC region.</div>
+                </div>
+                
+                <div class="skill-item">
+                    <span class="skill-level essential">ESSENTIAL</span>
+                    <div class="step-title">Project Management</div>
+                    <div class="step-desc">Juggle multiple projects simultaneously, maintain detailed schedules, anticipate bottlenecks, and deliver on tight deadlines consistently.</div>
+                </div>
+                
+                <div class="skill-item">
+                    <span class="skill-level advanced">ADVANCED</span>
+                    <div class="step-title">Cultural Intelligence</div>
+                    <div class="step-desc">Navigate cultural differences between international talent and GCC audiences. Understand local customs, regulations, and content sensitivities.</div>
+                </div>
+                
+                <div class="skill-item">
+                    <span class="skill-level expert">EXPERT</span>
+                    <div class="step-title">Crisis Management</div>
+                    <div class="step-desc">Quick problem-solving under pressure. Handle last-minute cancellations, visa issues, technical failures, or performer emergencies with calm professionalism.</div>
+                </div>
+                
+                <div class="skill-item">
+                    <span class="skill-level advanced">ADVANCED</span>
+                    <div class="step-title">Industry Networking</div>
+                    <div class="step-desc">Build and maintain relationships with agents, artists, venues, production companies, and other stakeholders across international markets.</div>
+                </div>
+                
+                <div class="skill-item">
+                    <span class="skill-level essential">ESSENTIAL</span>
+                    <div class="step-title">Technical Understanding</div>
+                    <div class="step-desc">Basic knowledge of sound, lighting, staging requirements. Communicate effectively with technical teams about artist specifications.</div>
+                </div>
+            </div>
+            
+            <div id="skills-dev" class="section">
+                <h2>Skills Development Roadmap</h2>
+                
+                <div class="highlight">
+                    <strong>🎓 Continuous Learning Path</strong><br>
+                    Master these skills progressively to advance from beginner to expert casting manager. Each level builds on the previous, creating a comprehensive professional skill set.
+                </div>
+                
+                <h2>Level 1: Foundation (0-12 months)</h2>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">📧</span>Professional Communication</div>
+                    <div class="step-desc"><strong>Practice:</strong> Write 10 professional emails daily (introductions, follow-ups, confirmations). <strong>Study:</strong> Business writing courses on Coursera or LinkedIn Learning. <strong>Exercise:</strong> Role-play difficult conversations with mentors. Draft sample contracts and proposals for review.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">📊</span>Basic Project Management</div>
+                    <div class="step-desc"><strong>Tools to Master:</strong> Asana, Trello, or Monday.com. <strong>Practice:</strong> Manage personal projects using PM software. <strong>Certification:</strong> Google Project Management Certificate (free). <strong>Exercise:</strong> Create detailed timelines for mock casting projects.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">💰</span>Budget Fundamentals</div>
+                    <div class="step-desc"><strong>Skills:</strong> Excel/Google Sheets mastery, basic accounting principles. <strong>Practice:</strong> Create budget templates, track personal expenses like a project. <strong>Resources:</strong> YouTube tutorials on budget spreadsheets. <strong>Exercise:</strong> Build casting budgets for hypothetical shows at different scales.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">🔍</span>Research & Database Management</div>
+                    <div class="step-desc"><strong>Practice:</strong> Build a talent database with 100+ profiles. <strong>Tools:</strong> Airtable, Notion, or Excel. <strong>Skills:</strong> Advanced search techniques, data organization. <strong>Exercise:</strong> Research and categorize talent by genre, location, price range, availability.</div>
+                </div>
+                
+                <h2>Level 2: Intermediate (1-3 years)</h2>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">🤝</span>Negotiation Skills</div>
+                    <div class="step-desc"><strong>Study:</strong> "Never Split the Difference" by Chris Voss. <strong>Courses:</strong> Negotiation courses on Harvard Online or Coursera. <strong>Practice:</strong> Negotiate in low-stakes situations first. <strong>Mentorship:</strong> Shadow experienced negotiators during contract discussions.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">📜</span>Contract & Legal Knowledge</div>
+                    <div class="step-desc"><strong>Study:</strong> Entertainment law basics, GCC labor regulations. <strong>Resources:</strong> Legal templates from industry associations. <strong>Practice:</strong> Review and redline existing contracts. <strong>Networking:</strong> Build relationships with entertainment lawyers for guidance.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">🌍</span>Cultural Intelligence</div>
+                    <div class="step-desc"><strong>Study:</strong> GCC business culture, Islamic holidays impact on scheduling. <strong>Practice:</strong> Work with international talent from diverse backgrounds. <strong>Resources:</strong> Cultural awareness training, language basics (Arabic helpful). <strong>Exercise:</strong> Research cultural norms for each market you work with.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">🎬</span>Production Understanding</div>
+                    <div class="step-desc"><strong>Learn:</strong> Basic technical theater, sound/lighting fundamentals. <strong>Practice:</strong> Attend technical rehearsals, ask questions. <strong>Resources:</strong> Online courses in stage production. <strong>Networking:</strong> Build relationships with technical directors and production managers.</div>
+                </div>
+                
+                <h2>Level 3: Advanced (3-5 years)</h2>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">💼</span>Strategic Talent Relations</div>
+                    <div class="step-desc"><strong>Practice:</strong> Develop long-term artist partnerships, not just transactions. <strong>Skills:</strong> Relationship management CRM tools. <strong>Exercise:</strong> Create personalized communication plans for top talent. <strong>Goal:</strong> Become the preferred casting contact for 20+ artists.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">📈</span>Advanced Budget & Finance</div>
+                    <div class="step-desc"><strong>Skills:</strong> Multi-currency management, tax implications, profit margins. <strong>Tools:</strong> QuickBooks, SAP, or industry-specific software. <strong>Study:</strong> Entertainment finance courses. <strong>Practice:</strong> Manage budgets for increasingly complex projects.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">⚡</span>Crisis Management</div>
+                    <div class="step-desc"><strong>Preparation:</strong> Create contingency plans for common issues. <strong>Skills:</strong> Quick decision-making, backup talent lists. <strong>Practice:</strong> Role-play emergency scenarios. <strong>Mindset:</strong> Stay calm under pressure, develop problem-solving frameworks.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">👥</span>Team Leadership</div>
+                    <div class="step-desc"><strong>Practice:</strong> Supervise junior coordinators and assistants. <strong>Skills:</strong> Delegation, mentorship, feedback delivery. <strong>Resources:</strong> Leadership courses, management books. <strong>Exercise:</strong> Lead small teams on projects, build leadership philosophy.</div>
+                </div>
+                
+                <h2>Level 4: Expert (5+ years)</h2>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">🎯</span>Strategic Vision</div>
+                    <div class="step-desc"><strong>Skills:</strong> Market trend analysis, creative concept development. <strong>Practice:</strong> Propose talent strategies that enhance project vision. <strong>Goal:</strong> Be consulted at project conception stage. <strong>Exercise:</strong> Develop talent packages that create unique value propositions.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">🌐</span>International Market Expertise</div>
+                    <div class="step-desc"><strong>Knowledge:</strong> Deep understanding of multiple markets (Europe, US, Asia, MENA). <strong>Network:</strong> Contacts in all major entertainment hubs. <strong>Skills:</strong> Navigate complex international deals. <strong>Practice:</strong> Regularly work with talent from 5+ different regions.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">🏆</span>Industry Thought Leadership</div>
+                    <div class="step-desc"><strong>Activities:</strong> Speak at industry events, write articles, mentor newcomers. <strong>Goal:</strong> Be recognized as a casting expert in GCC region. <strong>Platform:</strong> Build professional brand through LinkedIn and industry publications. <strong>Impact:</strong> Shape industry standards and best practices.</div>
+                </div>
+                
+                <h2>Recommended Certifications</h2>
+                
+                <div class="skill-item">
+                    <span class="skill-level essential">FOUNDATION</span>
+                    <div class="step-title">Project Management Certification</div>
+                    <div class="step-desc">Google Project Management Certificate, PMP basics, or Agile fundamentals. Demonstrates organizational and planning capabilities essential for casting coordination.</div>
+                </div>
+                
+                <div class="skill-item">
+                    <span class="skill-level advanced">INTERMEDIATE</span>
+                    <div class="step-title">Event Management Certification</div>
+                    <div class="step-desc">CEM (Certified in Exhibition Management) or similar. Highly relevant for live entertainment and show production aspects of casting management.</div>
+                </div>
+                
+                <div class="skill-item">
+                    <span class="skill-level advanced">INTERMEDIATE</span>
+                    <div class="step-title">Negotiation & Mediation Training</div>
+                    <div class="step-desc">Harvard PON courses, professional negotiation certifications. Critical for contract discussions and conflict resolution with talent and clients.</div>
+                </div>
+                
+                <div class="skill-item">
+                    <span class="skill-level expert">ADVANCED</span>
+                    <div class="step-title">Entertainment Business Certificate</div>
+                    <div class="step-desc">Programs from Berklee, UCLA Extension, or NYU covering entertainment law, finance, and management specific to the industry.</div>
+                </div>
+                
+                <h2>Practice Exercises by Skill</h2>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">📝</span>Communication Drills</div>
+                    <div class="step-desc">Write rejection emails that maintain relationships. Draft pitch emails to high-profile talent. Create client presentations for talent recommendations. Practice delivering bad news professionally. Record yourself in mock negotiations and review.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">🎭</span>Talent Assessment Practice</div>
+                    <div class="step-desc">Watch performance videos and create evaluation criteria. Practice identifying talent that fits specific briefs. Develop your eye for potential vs polish. Create comparison matrices for similar performers. Build casting rationale documents.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">⏱️</span>Time Management Exercises</div>
+                    <div class="step-desc">Manage 3 simultaneous mock projects with conflicting deadlines. Create detailed production timelines accounting for all variables. Practice prioritization with limited resources. Develop contingency time buffers for common delays.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">🧮</span>Budget Simulation</div>
+                    <div class="step-desc">Create complete casting budgets for different event sizes. Practice value engineering (achieving goals with less). Track mock budgets against actuals. Negotiate talent fees within strict parameters. Calculate ROI for talent investments.</div>
+                </div>
+                
+                <h2>Mentorship & Learning Resources</h2>
+                
+                <div class="skill-item">
+                    <span class="skill-level essential">FREE RESOURCES</span>
+                    <div class="step-title">Online Learning</div>
+                    <div class="step-desc">YouTube channels on entertainment business, LinkedIn Learning (often free through libraries), industry podcasts like "The Business" or casting-focused shows, free webinars from production companies.</div>
+                </div>
+                
+                <div class="skill-item">
+                    <span class="skill-level essential">NETWORKING</span>
+                    <div class="step-title">Find a Mentor</div>
+                    <div class="step-desc">Reach out to established casting managers for coffee chats. Join industry associations and attend events. Offer to volunteer on projects to learn. Ask specific questions rather than general guidance. Show appreciation and follow through on advice.</div>
+                </div>
+                
+                <div class="skill-item">
+                    <span class="skill-level advanced">PAID PROGRAMS</span>
+                    <div class="step-title">Professional Development</div>
+                    <div class="step-desc">Coursera/edX entertainment courses, Industry conferences (MEVENTS, IMEX), Workshops by production companies, Specialized bootcamps for casting/talent management, International programs in LA/London/Dubai.</div>
+                </div>
+                
+                <div class="highlight">
+                    <strong>🎯 Development Strategy:</strong> Focus on mastering 2-3 skills per year deeply rather than touching everything superficially. Seek feedback constantly. Apply new skills immediately in real projects. Track your progress and celebrate milestones. Remember, expertise takes 10,000 hours—be patient and persistent!
+                </div>
+            </div>
+            
+            <div id="terminology" class="section">
+                <h2>Industry Terminology & Glossary</h2>
+                
+                <div class="highlight">
+                    <strong>📚 Essential Vocabulary</strong><br>
+                    Master these terms to communicate professionally with talent, agents, clients, and production teams. Organized by category for easy reference.
+                </div>
+                
+                <h2>Contract & Legal Terms</h2>
+                
+                <div class="step">
+                    <div class="step-title">Agent Commission</div>
+                    <div class="step-desc">Percentage fee (typically 10-20%) that talent agents take from artist's earnings for representing and booking them. Always clarify if quoted fees are inclusive or exclusive of commission.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Buyout</div>
+                    <div class="step-desc">One-time payment granting unlimited usage rights to performance footage, recordings, or images. Common in commercials. More expensive than limited-use agreements but provides long-term value.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Force Majeure</div>
+                    <div class="step-desc">Contract clause releasing parties from obligations due to extraordinary events beyond control (natural disasters, pandemics, war). Critical for international bookings. Became especially important post-2020.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Rider</div>
+                    <div class="step-desc">Additional contract document specifying performer's technical requirements, hospitality needs, travel arrangements, and special requests. Can include everything from sound equipment to dietary preferences. Always review carefully for hidden costs.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Option</div>
+                    <div class="step-desc">Holding talent exclusively for a specific date with partial payment, preventing them from booking other work. Full payment due if confirmed, partial payment retained if cancelled. Common for backup talent planning.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Work Permit / Artist Visa</div>
+                    <div class="step-desc">Legal authorization for international performers to work in GCC countries. Requirements vary by country and performance duration. Processing can take 2-6 weeks. Always factor into timelines.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Exclusivity Clause</div>
+                    <div class="step-desc">Contract provision preventing talent from performing for competitors within specific timeframe or geographic area. Common for brand ambassadors and major events. Can significantly increase fees.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Indemnity</div>
+                    <div class="step-desc">Protection against legal claims or losses. Typically covers injury, copyright infringement, or contract breaches. Both parties usually provide mutual indemnification in entertainment contracts.</div>
+                </div>
+                
+                <h2>Performance & Production Terms</h2>
+                
+                <div class="step">
+                    <div class="step-title">Load-in / Load-out</div>
+                    <div class="step-desc">Time allocated for setting up equipment before show (load-in) and removing it after (load-out). Critical for scheduling venue access and calculating labor costs. Can range from 2 hours to full days.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Tech Rehearsal</div>
+                    <div class="step-desc">Practice session focusing on technical elements like lighting, sound, and stage movements rather than performance quality. Usually held day before or morning of show. Essential for complex productions.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Sound Check</div>
+                    <div class="step-desc">Pre-performance testing of audio equipment and levels. Typically 1-3 hours before show. Artists verify their monitors, microphones, and overall sound balance. Non-negotiable for professional performers.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Green Room</div>
+                    <div class="step-desc">Private backstage area where performers rest, prepare, and wait before/after performances. Should include refreshments, comfortable seating, mirrors, and sometimes catering as specified in rider.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Stage Plot / Tech Rider</div>
+                    <div class="step-desc">Detailed diagram showing exact placement of equipment, instruments, monitors, and performers on stage. Includes power requirements, cable specifications, and space dimensions. Provided by artist's technical team.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Front of House (FOH)</div>
+                    <div class="step-desc">Sound mixing position located in audience area, controlling what spectators hear. Also refers to general audience-facing aspects of venue. Opposite of backstage operations.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Monitor Mix</div>
+                    <div class="step-desc">Customized audio feed sent to performers' stage speakers or in-ear monitors so they hear themselves and other performers. Each artist may require different mix preferences.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Run of Show</div>
+                    <div class="step-desc">Minute-by-minute timeline of entire event including all performances, transitions, technical cues, and breaks. Essential coordination document shared with all team members. Updated constantly during rehearsals.</div>
+                </div>
+                
+                <h2>Casting & Talent Terms</h2>
+                
+                <div class="step">
+                    <div class="step-title">Headshot</div>
+                    <div class="step-desc">Professional photo of performer, typically shoulders-up, used for casting consideration and promotional materials. Should be recent and accurately represent current appearance. Digital format required for databases.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Showreel / Demo Reel</div>
+                    <div class="step-desc">Video compilation (usually 2-5 minutes) showcasing talent's best work and range. Essential for evaluating performers remotely. Should be easily accessible via link, updated regularly.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Callback</div>
+                    <div class="step-desc">Second audition round for shortlisted candidates. Usually more detailed than initial audition, may include chemistry reads, specific scene work, or meeting with decision-makers. Indicates serious consideration.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Cold Read</div>
+                    <div class="step-desc">Performing script or material with little or no preparation time. Tests performer's instincts, adaptability, and sight-reading skills. Common in commercial auditions.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Type / Typecast</div>
+                    <div class="step-desc">Category of roles performer is typically cast in based on appearance, age, or demonstrated abilities. While limiting, understanding your type helps target appropriate opportunities.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Availability Check</div>
+                    <div class="step-desc">Confirming if talent is free for specific dates before formal booking. Does not constitute a hold or commitment from either party. First step in booking process.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Talent Pool</div>
+                    <div class="step-desc">Curated database of pre-vetted performers organized by specialty, location, rate, and other criteria. Maintained by casting managers for quick access to suitable candidates.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Supporting / Featured Role</div>
+                    <div class="step-desc">Secondary performers with specific responsibilities but not lead positions. Featured roles have individual moments; supporting roles blend with ensemble. Pay rates reflect distinction.</div>
+                </div>
+                
+                <h2>Financial & Business Terms</h2>
+                
+                <div class="step">
+                    <div class="step-title">Day Rate</div>
+                    <div class="step-desc">Fixed fee for one day's work regardless of actual hours (within reason). Common for rehearsals and production days. Typically covers 8-10 hours; overtime may apply beyond that.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Performance Fee</div>
+                    <div class="step-desc">Amount paid specifically for the performance itself, separate from travel, rehearsal, or other services. The primary compensation line item in most talent contracts.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Per Diem</div>
+                    <div class="step-desc">Daily allowance for meals and incidental expenses when traveling. Typical range $50-150/day depending on location and performer level. Often provided in local currency upon arrival.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Advance / Deposit</div>
+                    <div class="step-desc">Partial payment (typically 25-50%) made upfront upon contract signing to secure booking. Demonstrates commitment from client. Balance usually due on or before performance date.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Net vs Gross</div>
+                    <div class="step-desc">Net is amount after deductions (taxes, commissions). Gross is total before deductions. Always clarify which is being quoted to avoid confusion and budget miscalculations.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Contingency Budget</div>
+                    <div class="step-desc">Reserve funds (typically 10-15% of budget) for unexpected costs like travel delays, equipment rentals, or last-minute talent changes. Essential for complex international bookings.</div>
+                </div>
+                
+                <h2>GCC-Specific Terms</h2>
+                
+                <div class="step">
+                    <div class="step-title">NOC (No Objection Certificate)</div>
+                    <div class="step-desc">Document from current sponsor allowing employee to work additional jobs or change sponsors in GCC countries. Required for residents performing freelance work. Essential for local talent bookings.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Sponsor / Sponsorship</div>
+                    <div class="step-desc">In GCC context, refers to employer or entity providing work visa and legal status to foreign workers. Different from marketing sponsorship. Artist visas typically sponsored by production company or venue.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Ministry Approval</div>
+                    <div class="step-desc">Government clearance required for public performances in many GCC countries. Covers content appropriateness, licensing, and compliance with cultural regulations. Processing time varies by country.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Ramadan Restrictions</div>
+                    <div class="step-desc">Special considerations during Islamic holy month including adjusted performance times, content limitations, and reduced daytime activities. Entertainment usually scheduled after Iftar (sunset). Plan productions accordingly.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Free Zone</div>
+                    <div class="step-desc">Designated economic zones in UAE (like Dubai Media City, DIFC) with different regulations, tax structures, and licensing requirements. Some entertainment companies operate from free zones for business advantages.</div>
+                </div>
+                
+                <h2>Communication Phrases</h2>
+                
+                <div class="step">
+                    <div class="step-title">"Penciled In"</div>
+                    <div class="step-desc">Tentative booking, not confirmed. Talent is aware and considering, but can still accept other offers. Less formal than "first hold." Use to gauge interest before firm commitment.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">"First Hold" / "Second Hold"</div>
+                    <div class="step-desc">First hold means talent is exclusively reserved pending confirmation. Second hold means they're backup if first option falls through. Must be clearly documented to avoid misunderstandings.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">"Confirmed" / "Booked"</div>
+                    <div class="step-desc">Contract signed, dates locked, payment terms agreed. Most secure booking status. Both parties legally committed. Always get written confirmation, never rely on verbal.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">"TBD" / "TBC"</div>
+                    <div class="step-desc">To Be Determined / To Be Confirmed. Used in schedules and contracts when specific details aren't finalized but framework is agreed. Should always include deadline for determination.</div>
+                </div>
+                
+                <div class="highlight">
+                    <strong>💡 Pro Tip:</strong> When in doubt about a term, always ask for clarification. Using terminology incorrectly can lead to costly misunderstandings, especially in contract negotiations. Build a personal glossary of terms you encounter regularly with notes on regional variations.
+                </div>
+            </div>
+            
+            <div id="quick-ref" class="section">
+                <h2>Quick Reference Cheat Sheet</h2>
+                
+                <div class="highlight">
+                    <strong>⚡ Fast Access Tools</strong><br>
+                    Essential templates, checklists, formulas, and timelines for day-to-day casting management. Bookmark this section for quick reference during busy production periods.
+                </div>
+                
+                <h2>Project Planning Checklist</h2>
+                
+                <div class="step">
+                    <div class="step-title">□ Initial Client Meeting</div>
+                    <div class="step-desc">Confirm: Event date/time, venue, budget range, audience demographics, performance style, number of performers needed, creative vision, timeline for decision, key stakeholders.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">□ Talent Research Phase</div>
+                    <div class="step-desc">Create shortlist of 8-12 options, gather showreels and headshots, verify availability, get preliminary quotes, prepare comparison matrix, schedule client review meeting.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">□ Audition Coordination</div>
+                    <div class="step-desc">Book venue/setup video calls, send audition materials, confirm time slots, prepare evaluation forms, arrange technical requirements, record sessions (with permission).</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">□ Contract Negotiation</div>
+                    <div class="step-desc">Draft agreement, review rider requirements, clarify payment terms, confirm dates/times, address travel/accommodation, set deposit amount, establish cancellation policy.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">□ Logistics Planning</div>
+                    <div class="step-desc">Book flights and hotels, arrange airport transfers, process visa applications, coordinate technical requirements, schedule rehearsals, confirm green room setup.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">□ Pre-Production</div>
+                    <div class="step-desc">Conduct tech rehearsal, finalize run of show, confirm all vendors, distribute contact lists, prepare emergency backup plans, brief all team members.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">□ Show Day</div>
+                    <div class="step-desc">Coordinate artist arrival, oversee sound check, manage dressing room, handle last-minute issues, supervise performance, collect feedback, process final payments.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">□ Post-Event</div>
+                    <div class="step-desc">Send thank you notes, process final invoices, archive documentation, gather client feedback, update talent database, document lessons learned.</div>
+                </div>
+                
+                <h2>Budget Calculation Formulas</h2>
+                
+                <div class="skill-item">
+                    <span class="skill-level essential">BASIC</span>
+                    <div class="step-title">Performance Fee Calculation</div>
+                    <div class="step-desc"><strong>Base Fee + Travel + Accommodation + Per Diem + Agent Commission = Total Talent Cost</strong><br>Example: $5,000 + $1,200 + $800 + $300 + $700 (10%) = $8,000 total</div>
+                </div>
+                
+                <div class="skill-item">
+                    <span class="skill-level essential">BASIC</span>
+                    <div class="step-title">Contingency Budget</div>
+                    <div class="step-desc"><strong>Total Budget × 0.10 to 0.15 = Contingency Reserve</strong><br>Example: $50,000 × 0.12 = $6,000 contingency fund</div>
+                </div>
+                
+                <div class="skill-item">
+                    <span class="skill-level advanced">ADVANCED</span>
+                    <div class="step-title">Day Rate vs Hourly</div>
+                    <div class="step-desc"><strong>If Hourly Rate × Expected Hours > Day Rate, use Day Rate</strong><br>Example: $150/hr × 8 hrs = $1,200 vs $800 day rate → Use day rate</div>
+                </div>
+                
+                <div class="skill-item">
+                    <span class="skill-level advanced">ADVANCED</span>
+                    <div class="step-title">Multi-Currency Conversion</div>
+                    <div class="step-desc"><strong>(Amount in Foreign Currency ÷ Exchange Rate) + Transfer Fees = AED Amount</strong><br>Always add 3-5% buffer for rate fluctuations</div>
+                </div>
+                
+                <h2>Timeline Planning Guide</h2>
+                
+                <div class="step">
+                    <div class="step-title">12+ Weeks Before Event</div>
+                    <div class="step-desc">Concept development, budget approval, initial talent research, venue confirmation. Best time for international bookings requiring visas.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">8-12 Weeks Before</div>
+                    <div class="step-desc">Talent shortlisting, auditions, contract negotiations, first holds placed, deposit payments made. Start visa applications for international talent.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">6-8 Weeks Before</div>
+                    <div class="step-desc">Contracts finalized, travel bookings made, technical riders reviewed, rehearsal schedules drafted, backup options identified.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">4-6 Weeks Before</div>
+                    <div class="step-desc">Visa processing, accommodation confirmed, ground logistics arranged, production meetings held, run of show drafted.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">2-4 Weeks Before</div>
+                    <div class="step-desc">Final production details confirmed, emergency contacts distributed, tech specs finalized, rehearsal spaces booked, promotional materials prepared.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">1 Week Before</div>
+                    <div class="step-desc">Travel confirmations sent, final payments processed, tech rehearsal scheduled, all parties briefed, contingency plans reviewed.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Day Before Event</div>
+                    <div class="step-desc">Artist arrival and check-in, venue walkthrough, tech rehearsal, final adjustments, team coordination meeting, rest period for performers.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Event Day</div>
+                    <div class="step-desc">Early venue access, sound check, final briefing, green room setup, performance execution, immediate post-show debrief.</div>
+                </div>
+                
+                <h2>Standard Contract Clauses</h2>
+                
+                <div class="step">
+                    <div class="step-title">Performance Details</div>
+                    <div class="step-desc">Event date, start/end times, venue address, performance duration, number of sets, sound check time, technical requirements, dress code.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Compensation</div>
+                    <div class="step-desc">Total fee amount, payment schedule (deposit % and balance %), payment method, currency, included/excluded expenses, overtime rates if applicable.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Travel & Accommodation</div>
+                    <div class="step-desc">Flight class, arrival/departure dates, hotel star rating, per diem amount, ground transportation, meal provisions, guest allowances.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Cancellation Policy</div>
+                    <div class="step-desc">Cancellation by client (60+ days = X% refund, 30-60 days = Y%, under 30 = Z%), cancellation by talent (replacement required, penalties), force majeure provisions.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Technical Requirements</div>
+                    <div class="step-desc">Sound system specs, lighting needs, stage dimensions, power requirements, backline equipment, monitor preferences, special effects, crew support.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Usage Rights</div>
+                    <div class="step-desc">Photography/video permissions, social media posting rights, promotional use terms, performance recording rights, broadcast limitations, territory restrictions.</div>
+                </div>
+                
+                <h2>Emergency Contact Template</h2>
+                
+                <div class="skill-item">
+                    <span class="skill-level essential">CRITICAL</span>
+                    <div class="step-title">Key Contacts List</div>
+                    <div class="step-desc"><strong>Prepare for all stakeholders:</strong> Casting Manager (you) with 2 phone numbers, Artist/Manager with WhatsApp, Client contact with backup, Venue coordinator, Technical director, Ground transport, Hotel front desk, Emergency services (local ambulance/police), Embassy/Consulate (for international talent), Backup talent contacts.</div>
+                </div>
+                
+                <h2>Rate Benchmarks (GCC Region)</h2>
+                
+                <div class="step">
+                    <div class="step-title">Entry-Level Performers</div>
+                    <div class="step-desc">Emerging talent, local artists, background performers: $500-2,000 per performance depending on event scale and duration.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Mid-Level Professionals</div>
+                    <div class="step-desc">Experienced performers, regional recognition, specialized skills: $2,000-10,000 per performance plus travel/accommodation.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Established Artists</div>
+                    <div class="step-desc">National recognition, strong portfolio, consistent bookings: $10,000-50,000 per performance, comprehensive riders expected.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">International Headliners</div>
+                    <div class="step-desc">Global recognition, chart-toppers, celebrity status: $50,000-500,000+ per performance, extensive production requirements, exclusive contracts.</div>
+                </div>
+                
+                <h2>Quick Troubleshooting Guide</h2>
+                
+                <div class="step">
+                    <div class="step-title">Issue: Visa Delay</div>
+                    <div class="step-desc"><strong>Solution:</strong> Have backup local talent on standby. Fast-track applications through government contacts. Consider virtual performance option. Always build 2-week buffer into international bookings.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Issue: Artist Cancellation</div>
+                    <div class="step-desc"><strong>Solution:</strong> Activate backup talent from second hold. Renegotiate scope with available performers. Offer client alternative dates. Check force majeure clause in contract for refund obligations.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Issue: Budget Overrun</div>
+                    <div class="step-desc"><strong>Solution:</strong> Use contingency fund. Negotiate reduced scope with client. Source more cost-effective talent alternatives. Review all line items for cost-cutting opportunities without quality loss.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Issue: Technical Failures</div>
+                    <div class="step-desc"><strong>Solution:</strong> Have venue technical backup systems confirmed. Carry essential backup equipment. Build extra sound check time. Ensure technical director has contingency plans for common issues.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Issue: Contract Dispute</div>
+                    <div class="step-desc"><strong>Solution:</strong> Review written agreements immediately. Document all communications. Engage entertainment lawyer if needed. Seek mediation before litigation. Maintain professional composure throughout.</div>
+                </div>
+                
+                <h2>Communication Templates</h2>
+                
+                <div class="skill-item">
+                    <span class="skill-level essential">EMAIL</span>
+                    <div class="step-title">Initial Talent Inquiry</div>
+                    <div class="step-desc"><strong>Subject: Performance Inquiry - [Event Name] [Date]</strong><br>Introduce yourself and client, describe event briefly, specify date/location, indicate budget range, request availability and quote, mention deadline for response, attach event brief if available.</div>
+                </div>
+                
+                <div class="skill-item">
+                    <span class="skill-level essential">EMAIL</span>
+                    <div class="step-title">Booking Confirmation</div>
+                    <div class="step-desc"><strong>Subject: Booking Confirmed - [Artist Name] [Event] [Date]</strong><br>Confirm all details (date, time, venue, fee), outline next steps, attach signed contract, provide deposit payment timeline, share logistics coordinator contact, express enthusiasm.</div>
+                </div>
+                
+                <div class="skill-item">
+                    <span class="skill-level essential">EMAIL</span>
+                    <div class="step-title">Polite Rejection</div>
+                    <div class="step-desc"><strong>Subject: Re: [Event Name] - Update</strong><br>Thank them for submission, acknowledge their talent professionally, explain decision made differently (budget/style/timing), keep door open for future, offer constructive feedback if appropriate, maintain relationship.</div>
+                </div>
+                
+                <div class="highlight">
+                    <strong>📱 Pro Tip:</strong> Save these templates in your phone notes or email drafts for instant access during crunch time. Customize them for your style but maintain the core structure. Create a dedicated folder for all templates and checklists you develop over time!
+                </div>
+            </div>
+            
+            <div id="tutorials" class="section">
+                <h2>Step-by-Step Tutorials</h2>
+                
+                <div class="highlight">
+                    <strong>📺 Practical Walkthroughs</strong><br>
+                    Learn by doing with these detailed tutorials covering essential casting management tasks. Follow each step to master key processes and build confidence.
+                </div>
+                
+                <h2>Tutorial 1: Conducting a Virtual Audition</h2>
+                
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <div class="step-title">Setup Your Platform</div>
+                    <div class="step-desc"><strong>Action:</strong> Choose video platform (Zoom recommended for features). Create dedicated meeting room with waiting room enabled. Test audio/video quality in advance. Prepare screen sharing for presenting materials. Set up recording if needed (get consent first).</div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <div class="step-title">Prepare Audition Materials</div>
+                    <div class="step-desc"><strong>Action:</strong> Create PDF with audition sides/script. Prepare character description document. Draft technical requirements (lighting, framing, audio). Create evaluation rubric with scoring criteria. Share materials 48 hours before audition via email.</div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <div class="step-title">Schedule & Communicate</div>
+                    <div class="step-desc"><strong>Action:</strong> Send calendar invite with Zoom link. Include clear time (specify timezone - Dubai time). Provide technical checklist (camera position, lighting, background). Send reminder 24 hours before. Include contact for technical issues.</div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <div class="step-title">Pre-Audition Tech Check</div>
+                    <div class="step-desc"><strong>Action:</strong> Join 15 minutes early. Test recording function. Prepare backup recording method (phone). Have evaluation form ready. Brief any observers on mute/camera protocol. Ensure stable internet connection.</div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">5</span>
+                    <div class="step-title">Conduct the Audition</div>
+                    <div class="step-desc"><strong>Action:</strong> Welcome warmly, put performer at ease. Briefly explain format (5 min intro, 10 min performance, 5 min Q&A). Start recording (announce for consent). Take detailed notes during performance. Ask 2-3 follow-up questions. Thank professionally regardless of outcome.</div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">6</span>
+                    <div class="step-title">Post-Audition Process</div>
+                    <div class="step-desc"><strong>Action:</strong> Save recording with clear filename (Name_Date_Project). Complete evaluation form immediately while fresh. Share recording with decision-makers via secure link. Update talent database with notes. Send thank-you email within 24 hours with timeline for decision.</div>
+                </div>
+                
+                <h2>Tutorial 2: Negotiating Your First Contract</h2>
+                
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <div class="step-title">Research Market Rates</div>
+                    <div class="step-desc"><strong>Action:</strong> Check 3-5 similar artists' rates. Review industry rate cards for region. Consider artist's experience level and demand. Factor in event prestige and exposure value. Establish your budget ceiling before contact.</div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <div class="step-title">Initial Contact</div>
+                    <div class="step-desc"><strong>Action:</strong> Email agent/artist with professional introduction. Provide event overview (date, venue, audience). Ask for availability first, then quote. Don't reveal your budget immediately. Request their standard rider for review. Set deadline for response (typically 3-5 days).</div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <div class="step-title">Review Their Offer</div>
+                    <div class="step-desc"><strong>Action:</strong> Break down all costs (fee, travel, accommodation, per diem, rider items). Compare to your budget. Identify negotiable vs non-negotiable items. Calculate total cost including hidden expenses. Prepare 2-3 alternative proposals.</div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <div class="step-title">Counter-Offer Strategy</div>
+                    <div class="step-desc"><strong>Action:</strong> Start 10-15% below their ask (if over budget). Emphasize value you're offering (exposure, audience, future bookings). Suggest compromises (reduce performance time, simplify rider). Offer non-monetary benefits (professional photos, video content). Stay respectful and positive throughout.</div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">5</span>
+                    <div class="step-title">Finalize Terms</div>
+                    <div class="step-desc"><strong>Action:</strong> Once agreed verbally, document everything in writing. Draft formal contract or ask them to send theirs. Review every clause carefully (cancellation, force majeure, payment schedule). Clarify ambiguous language before signing. Set deposit payment within 7 days of signing to secure booking.</div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">6</span>
+                    <div class="step-title">Post-Agreement Actions</div>
+                    <div class="step-desc"><strong>Action:</strong> Send signed contract to all parties. Process deposit payment immediately. Update project management system. Schedule follow-up check-ins. Add to production calendar. Send confirmation to client with next steps.</div>
+                </div>
+                
+                <h2>Tutorial 3: Creating a Professional Talent Presentation</h2>
+                
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <div class="step-title">Gather Materials</div>
+                    <div class="step-desc"><strong>Action:</strong> Collect high-res headshots from each talent option. Download showreels (30-60 sec clips best). Screenshot social media stats if relevant. Compile accolades, awards, notable performances. Get written permission to use their materials.</div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <div class="step-title">Structure Your Deck</div>
+                    <div class="step-desc"><strong>Action:</strong> Slide 1: Title (Event Name + Date). Slide 2: Brief overview (event goals, audience). Slides 3-4 per talent: Name/headshot, key credentials, video embed/link, why they fit, rate range. Final slide: Recommendation with rationale. Keep to 15-20 slides maximum.</div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <div class="step-title">Design for Impact</div>
+                    <div class="step-desc"><strong>Action:</strong> Use consistent template (PowerPoint/Keynote/Canva). Choose professional fonts (max 2 types). Apply brand colors if client has them. Use high-quality images only. Limit text (bullet points, not paragraphs). Include QR codes linking to full showreels.</div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <div class="step-title">Add Comparison Matrix</div>
+                    <div class="step-desc"><strong>Action:</strong> Create table comparing all options. Columns: Name, Rate, Availability, Experience Level, Unique Value. Use color coding (green=great fit, yellow=maybe, red=concern). Include objective scoring if helpful. Makes decision-making visual and clear.</div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">5</span>
+                    <div class="step-title">Prepare Your Pitch</div>
+                    <div class="step-desc"><strong>Action:</strong> Rehearse 2-3 minute intro for each talent. Anticipate client questions and prepare answers. Have backup options ready if they reject first choices. Prepare budget justifications. Practice with colleague for feedback.</div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">6</span>
+                    <div class="step-title">Deliver & Follow Up</div>
+                    <div class="step-desc"><strong>Action:</strong> Send presentation 24 hours before meeting for review. Present in person or via screen share. Speak enthusiastically but objectively. Take notes on feedback. Send summary email after with next steps. Provide deadline for decision to maintain talent holds.</div>
+                </div>
+                
+                <h2>Tutorial 4: Building a Talent Database from Scratch</h2>
+                
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <div class="step-title">Choose Your Platform</div>
+                    <div class="step-desc"><strong>Action:</strong> Airtable (recommended - visual, customizable, free tier). Alternative: Google Sheets (simple, collaborative). Notion (all-in-one, great for notes). Excel (powerful but less collaborative). Test 2-3 options before committing.</div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <div class="step-title">Design Your Structure</div>
+                    <div class="step-desc"><strong>Essential fields:</strong> Name, Contact Email, Phone, WhatsApp, Agent/Manager, Performance Type (singer/dancer/actor etc), Location/Nationality, Rate Range, Availability Status, Headshot (image field), Showreel Link, Social Media Links, Languages Spoken, Special Skills, Notes, Date Added, Last Contacted.</div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <div class="step-title">Set Up Categories & Tags</div>
+                    <div class="step-desc"><strong>Action:</strong> Create dropdown menus for common fields. Performance types: Solo Singer, Band, Dancer, DJ, Comedian, MC, etc. Experience levels: Beginner, Intermediate, Professional, Celebrity. Genres: Pop, Jazz, Classical, Traditional, etc. Status: Available, Booked, On Hold, Retired.</div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <div class="step-title">Populate Initial Data</div>
+                    <div class="step-desc"><strong>Action:</strong> Start with 20-30 talents you already know. Import contacts from email/phone. Research local talent agencies and add their rosters. Follow entertainment hashtags on social media for discoveries. Add 5-10 new profiles weekly. Quality over quantity initially.</div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">5</span>
+                    <div class="step-title">Create Search Views</div>
+                    <div class="step-desc"><strong>Action:</strong> Set up filtered views: "Available Now", "Singers - Pop", "Budget Under $5K", "Dubai-based Only", "International Artists". Create calendar view showing availability. Use gallery view for quick visual browsing of headshots.</div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">6</span>
+                    <div class="step-title">Maintain & Update</div>
+                    <div class="step-desc"><strong>Action:</strong> Schedule monthly database review. Update availability after each booking. Add notes after every interaction. Remove outdated or retired performers. Back up data weekly. Share access with team members with appropriate permissions. Aim for 200+ profiles within 6 months.</div>
+                </div>
+                
+                <h2>Tutorial 5: Handling Difficult Conversations with Talent</h2>
+                
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <div class="step-title">Scenario: Delivering Rejection</div>
+                    <div class="step-desc"><strong>Prepare:</strong> Schedule call/meeting (don't do via text). Review their submission to give specific feedback. Prepare honest but kind reasoning. <strong>Opening:</strong> "Thank you for auditioning. I want to personally share the outcome..." <strong>Deliver:</strong> "We've decided to go in a different direction. The client felt [specific reason]." <strong>Soften:</strong> "Your [skill] was impressive and we'd love to consider you for future projects."</div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <div class="step-title">Scenario: Negotiating Down Their Rate</div>
+                    <div class="step-desc"><strong>Prepare:</strong> Know your absolute budget limit. Identify what else you can offer. Research their typical rate. <strong>Opening:</strong> "I love your work and really want to make this happen..." <strong>Present reality:</strong> "Our budget is $X which I know is below your usual rate." <strong>Offer value:</strong> "We can offer [exposure/future bookings/professional content]. Would you consider $Y for this opportunity?"</div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <div class="step-title">Scenario: Last-Minute Cancellation by You</div>
+                    <div class="step-desc"><strong>Act immediately:</strong> Call first, then follow with written confirmation. <strong>Opening:</strong> "I have unfortunate news about [event]..." <strong>Explain:</strong> Give honest reason (client cancelled/budget cut/force majeure). <strong>Take responsibility:</strong> "I understand this impacts your schedule." <strong>Compensate:</strong> Offer cancellation fee per contract, prioritize them for next booking, provide referral if possible.</div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <div class="step-title">Scenario: Addressing Performance Concerns</div>
+                    <div class="step-desc"><strong>Timing:</strong> Address privately and promptly. <strong>Opening:</strong> "Can we talk about yesterday's rehearsal?" <strong>Specific feedback:</strong> "I noticed [specific issue]. The client has concerns about [aspect]." <strong>Collaborative:</strong> "How can we work together to address this before the show?" <strong>Support:</strong> Offer additional rehearsal time, resources, or adjustments. <strong>Clarity:</strong> Set clear expectations for improvement.</div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">5</span>
+                    <div class="step-title">Scenario: Managing Unrealistic Demands</div>
+                    <div class="step-desc"><strong>Listen fully:</strong> Let them explain their request completely. <strong>Acknowledge:</strong> "I understand this is important to you..." <strong>Explain constraints:</strong> "Given our budget/venue/timeline, we can't accommodate [demand]." <strong>Offer alternatives:</strong> "What if we [compromise solution]?" <strong>Firm but kind:</strong> "This is what we can do. If that doesn't work, I understand and respect your decision."</div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">6</span>
+                    <div class="step-title">General Framework for All Difficult Talks</div>
+                    <div class="step-desc"><strong>Before:</strong> Choose private setting, prepare key points, anticipate reactions. <strong>During:</strong> Stay calm and professional, use "I" statements, listen actively, avoid blame, focus on solutions. <strong>After:</strong> Document conversation in writing, follow through on commitments, maintain relationship regardless of outcome. <strong>Remember:</strong> Today's difficult conversation is tomorrow's trusted relationship if handled with respect.</div>
+                </div>
+                
+                <h2>Tutorial 6: Processing International Artist Visas (GCC)</h2>
+                
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <div class="step-title">Determine Visa Type Needed</div>
+                    <div class="step-desc"><strong>Action:</strong> Check artist's nationality (some are visa-exempt). Determine performance duration (1-day event vs multi-week residency). Contact immigration consultant or venue's admin team. UAE typically requires Artist Permit for performances. Saudi requires Ministry of Culture approval. Processing: 2-6 weeks average.</div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <div class="step-title">Gather Required Documents</div>
+                    <div class="step-desc"><strong>From Artist:</strong> Passport copy (min. 6 months validity), recent passport photo, CV/biography, portfolio/showreel links. <strong>From You:</strong> Event details document, venue contract, invitation letter on company letterhead, proof of payment/contract, insurance certificate. Different GCC countries have variations - confirm locally.</div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <div class="step-title">Submit Application</div>
+                    <div class="step-desc"><strong>Action:</strong> Work through approved sponsor (your company or venue). Submit via official government portal or authorized typing center. Pay application fees (varies $100-500). Get submission receipt with tracking number. Upload all documents in required formats (usually PDF, specific sizes).</div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <div class="step-title">Track Application Status</div>
+                    <div class="step-desc"><strong>Action:</strong> Check online portal daily. Respond immediately to any requests for additional documents. Escalate delays through immigration consultant if approaching deadline. Have backup plan if visa delayed (local replacement, virtual performance, reschedule).</div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">5</span>
+                    <div class="step-title">Upon Approval</div>
+                    <div class="step-desc"><strong>Action:</strong> Download and print visa approval. Email copy to artist immediately. Confirm they print and carry original during travel. Verify entry requirements at specific port of entry. Book flights only after visa confirmed. Brief artist on customs procedures and what to declare.</div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">6</span>
+                    <div class="step-title">Arrival & Compliance</div>
+                    <div class="step-desc"><strong>Action:</strong> Arrange airport pickup with someone holding name sign. Ensure they have booking confirmation and venue contact. Keep copy of visa with you on performance day. Complete any required exit procedures post-event. Document process for future reference and improvements.</div>
+                </div>
+                
+                <div class="highlight">
+                    <strong>💡 Tutorial Pro Tips:</strong> Practice each tutorial multiple times with low-stakes projects before applying to major bookings. Create your own checklist for each process and refine it with experience. Record yourself doing virtual auditions to improve your facilitation skills. Always debrief after difficult conversations to learn and improve!
+                </div>
+            </div>
+            
+            <div id="expertise" class="section">. Typically 1-3 hours before show. Artists verify their monitors, microphones, and overall sound balance. Non-negotiable for professional performers.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Green Room</div>
+                    <div class="step-desc">Private backstage area where performers rest, prepare, and wait before/after performances. Should include refreshments, comfortable seating, mirrors, and sometimes catering as specified in rider.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Stage Plot / Tech Rider</div>
+                    <div class="step-desc">Detailed diagram showing exact placement of equipment, instruments, monitors, and performers on stage. Includes power requirements, cable specifications, and space dimensions. Provided by artist's technical team.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Front of House (FOH)</div>
+                    <div class="step-desc">Sound mixing position located in audience area, controlling what spectators hear. Also refers to general audience-facing aspects of venue. Opposite of backstage operations.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Monitor Mix</div>
+                    <div class="step-desc">Customized audio feed sent to performers' stage speakers or in-ear monitors so they hear themselves and other performers. Each artist may require different mix preferences.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Run of Show</div>
+                    <div class="step-desc">Minute-by-minute timeline of entire event including all performances, transitions, technical cues, and breaks. Essential coordination document shared with all team members. Updated constantly during rehearsals.</div>
+                </div>
+                
+                <h2>Casting & Talent Terms</h2>
+                
+                <div class="step">
+                    <div class="step-title">Headshot</div>
+                    <div class="step-desc">Professional photo of performer, typically shoulders-up, used for casting consideration and promotional materials. Should be recent and accurately represent current appearance. Digital format required for databases.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Showreel / Demo Reel</div>
+                    <div class="step-desc">Video compilation (usually 2-5 minutes) showcasing talent's best work and range. Essential for evaluating performers remotely. Should be easily accessible via link, updated regularly.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Callback</div>
+                    <div class="step-desc">Second audition round for shortlisted candidates. Usually more detailed than initial audition, may include chemistry reads, specific scene work, or meeting with decision-makers. Indicates serious consideration.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Cold Read</div>
+                    <div class="step-desc">Performing script or material with little or no preparation time. Tests performer's instincts, adaptability, and sight-reading skills. Common in commercial auditions.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Type / Typecast</div>
+                    <div class="step-desc">Category of roles performer is typically cast in based on appearance, age, or demonstrated abilities. While limiting, understanding your type helps target appropriate opportunities.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Availability Check</div>
+                    <div class="step-desc">Confirming if talent is free for specific dates before formal booking. Does not constitute a hold or commitment from either party. First step in booking process.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Talent Pool</div>
+                    <div class="step-desc">Curated database of pre-vetted performers organized by specialty, location, rate, and other criteria. Maintained by casting managers for quick access to suitable candidates.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Supporting / Featured Role</div>
+                    <div class="step-desc">Secondary performers with specific responsibilities but not lead positions. Featured roles have individual moments; supporting roles blend with ensemble. Pay rates reflect distinction.</div>
+                </div>
+                
+                <h2>Financial & Business Terms</h2>
+                
+                <div class="step">
+                    <div class="step-title">Day Rate</div>
+                    <div class="step-desc">Fixed fee for one day's work regardless of actual hours (within reason). Common for rehearsals and production days. Typically covers 8-10 hours; overtime may apply beyond that.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Performance Fee</div>
+                    <div class="step-desc">Amount paid specifically for the performance itself, separate from travel, rehearsal, or other services. The primary compensation line item in most talent contracts.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Per Diem</div>
+                    <div class="step-desc">Daily allowance for meals and incidental expenses when traveling. Typical range $50-150/day depending on location and performer level. Often provided in local currency upon arrival.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Advance / Deposit</div>
+                    <div class="step-desc">Partial payment (typically 25-50%) made upfront upon contract signing to secure booking. Demonstrates commitment from client. Balance usually due on or before performance date.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Net vs Gross</div>
+                    <div class="step-desc">Net is amount after deductions (taxes, commissions). Gross is total before deductions. Always clarify which is being quoted to avoid confusion and budget miscalculations.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Contingency Budget</div>
+                    <div class="step-desc">Reserve funds (typically 10-15% of budget) for unexpected costs like travel delays, equipment rentals, or last-minute talent changes. Essential for complex international bookings.</div>
+                </div>
+                
+                <h2>GCC-Specific Terms</h2>
+                
+                <div class="step">
+                    <div class="step-title">NOC (No Objection Certificate)</div>
+                    <div class="step-desc">Document from current sponsor allowing employee to work additional jobs or change sponsors in GCC countries. Required for residents performing freelance work. Essential for local talent bookings.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Sponsor / Sponsorship</div>
+                    <div class="step-desc">In GCC context, refers to employer or entity providing work visa and legal status to foreign workers. Different from marketing sponsorship. Artist visas typically sponsored by production company or venue.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Ministry Approval</div>
+                    <div class="step-desc">Government clearance required for public performances in many GCC countries. Covers content appropriateness, licensing, and compliance with cultural regulations. Processing time varies by country.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Ramadan Restrictions</div>
+                    <div class="step-desc">Special considerations during Islamic holy month including adjusted performance times, content limitations, and reduced daytime activities. Entertainment usually scheduled after Iftar (sunset). Plan productions accordingly.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Free Zone</div>
+                    <div class="step-desc">Designated economic zones in UAE (like Dubai Media City, DIFC) with different regulations, tax structures, and licensing requirements. Some entertainment companies operate from free zones for business advantages.</div>
+                </div>
+                
+                <h2>Communication Phrases</h2>
+                
+                <div class="step">
+                    <div class="step-title">"Penciled In"</div>
+                    <div class="step-desc">Tentative booking, not confirmed. Talent is aware and considering, but can still accept other offers. Less formal than "first hold." Use to gauge interest before firm commitment.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">"First Hold" / "Second Hold"</div>
+                    <div class="step-desc">First hold means talent is exclusively reserved pending confirmation. Second hold means they're backup if first option falls through. Must be clearly documented to avoid misunderstandings.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">"Confirmed" / "Booked"</div>
+                    <div class="step-desc">Contract signed, dates locked, payment terms agreed. Most secure booking status. Both parties legally committed. Always get written confirmation, never rely on verbal.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">"TBD" / "TBC"</div>
+                    <div class="step-desc">To Be Determined / To Be Confirmed. Used in schedules and contracts when specific details aren't finalized but framework is agreed. Should always include deadline for determination.</div>
+                </div>
+                
+                <div class="highlight">
+                    <strong>💡 Pro Tip:</strong> When in doubt about a term, always ask for clarification. Using terminology incorrectly can lead to costly misunderstandings, especially in contract negotiations. Build a personal glossary of terms you encounter regularly with notes on regional variations.
+                </div>
+            </div>
+            
+            <div id="expertise" class="section">⚡</span>Crisis Management</div>
+                    <div class="step-desc"><strong>Preparation:</strong> Create contingency plans for common issues. <strong>Skills:</strong> Quick decision-making, backup talent lists. <strong>Practice:</strong> Role-play emergency scenarios. <strong>Mindset:</strong> Stay calm under pressure, develop problem-solving frameworks.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">👥</span>Team Leadership</div>
+                    <div class="step-desc"><strong>Practice:</strong> Supervise junior coordinators and assistants. <strong>Skills:</strong> Delegation, mentorship, feedback delivery. <strong>Resources:</strong> Leadership courses, management books. <strong>Exercise:</strong> Lead small teams on projects, build leadership philosophy.</div>
+                </div>
+                
+                <h2>Level 4: Expert (5+ years)</h2>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">🎯</span>Strategic Vision</div>
+                    <div class="step-desc"><strong>Skills:</strong> Market trend analysis, creative concept development. <strong>Practice:</strong> Propose talent strategies that enhance project vision. <strong>Goal:</strong> Be consulted at project conception stage. <strong>Exercise:</strong> Develop talent packages that create unique value propositions.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">🌐</span>International Market Expertise</div>
+                    <div class="step-desc"><strong>Knowledge:</strong> Deep understanding of multiple markets (Europe, US, Asia, MENA). <strong>Network:</strong> Contacts in all major entertainment hubs. <strong>Skills:</strong> Navigate complex international deals. <strong>Practice:</strong> Regularly work with talent from 5+ different regions.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">🏆</span>Industry Thought Leadership</div>
+                    <div class="step-desc"><strong>Activities:</strong> Speak at industry events, write articles, mentor newcomers. <strong>Goal:</strong> Be recognized as a casting expert in GCC region. <strong>Platform:</strong> Build professional brand through LinkedIn and industry publications. <strong>Impact:</strong> Shape industry standards and best practices.</div>
+                </div>
+                
+                <h2>Recommended Certifications</h2>
+                
+                <div class="skill-item">
+                    <span class="skill-level essential">FOUNDATION</span>
+                    <div class="step-title">Project Management Certification</div>
+                    <div class="step-desc">Google Project Management Certificate, PMP basics, or Agile fundamentals. Demonstrates organizational and planning capabilities essential for casting coordination.</div>
+                </div>
+                
+                <div class="skill-item">
+                    <span class="skill-level advanced">INTERMEDIATE</span>
+                    <div class="step-title">Event Management Certification</div>
+                    <div class="step-desc">CEM (Certified in Exhibition Management) or similar. Highly relevant for live entertainment and show production aspects of casting management.</div>
+                </div>
+                
+                <div class="skill-item">
+                    <span class="skill-level advanced">INTERMEDIATE</span>
+                    <div class="step-title">Negotiation & Mediation Training</div>
+                    <div class="step-desc">Harvard PON courses, professional negotiation certifications. Critical for contract discussions and conflict resolution with talent and clients.</div>
+                </div>
+                
+                <div class="skill-item">
+                    <span class="skill-level expert">ADVANCED</span>
+                    <div class="step-title">Entertainment Business Certificate</div>
+                    <div class="step-desc">Programs from Berklee, UCLA Extension, or NYU covering entertainment law, finance, and management specific to the industry.</div>
+                </div>
+                
+                <h2>Practice Exercises by Skill</h2>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">📝</span>Communication Drills</div>
+                    <div class="step-desc">Write rejection emails that maintain relationships. Draft pitch emails to high-profile talent. Create client presentations for talent recommendations. Practice delivering bad news professionally. Record yourself in mock negotiations and review.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">🎭</span>Talent Assessment Practice</div>
+                    <div class="step-desc">Watch performance videos and create evaluation criteria. Practice identifying talent that fits specific briefs. Develop your eye for potential vs polish. Create comparison matrices for similar performers. Build casting rationale documents.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">⏱️</span>Time Management Exercises</div>
+                    <div class="step-desc">Manage 3 simultaneous mock projects with conflicting deadlines. Create detailed production timelines accounting for all variables. Practice prioritization with limited resources. Develop contingency time buffers for common delays.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">🧮</span>Budget Simulation</div>
+                    <div class="step-desc">Create complete casting budgets for different event sizes. Practice value engineering (achieving goals with less). Track mock budgets against actuals. Negotiate talent fees within strict parameters. Calculate ROI for talent investments.</div>
+                </div>
+                
+                <h2>Mentorship & Learning Resources</h2>
+                
+                <div class="skill-item">
+                    <span class="skill-level essential">FREE RESOURCES</span>
+                    <div class="step-title">Online Learning</div>
+                    <div class="step-desc">YouTube channels on entertainment business, LinkedIn Learning (often free through libraries), industry podcasts like "The Business" or casting-focused shows, free webinars from production companies.</div>
+                </div>
+                
+                <div class="skill-item">
+                    <span class="skill-level essential">NETWORKING</span>
+                    <div class="step-title">Find a Mentor</div>
+                    <div class="step-desc">Reach out to established casting managers for coffee chats. Join industry associations and attend events. Offer to volunteer on projects to learn. Ask specific questions rather than general guidance. Show appreciation and follow through on advice.</div>
+                </div>
+                
+                <div class="skill-item">
+                    <span class="skill-level advanced">PAID PROGRAMS</span>
+                    <div class="step-title">Professional Development</div>
+                    <div class="step-desc">Coursera/edX entertainment courses, Industry conferences (MEVENTS, IMEX), Workshops by production companies, Specialized bootcamps for casting/talent management, International programs in LA/London/Dubai.</div>
+                </div>
+                
+                <div class="highlight">
+                    <strong>🎯 Development Strategy:</strong> Focus on mastering 2-3 skills per year deeply rather than touching everything superficially. Seek feedback constantly. Apply new skills immediately in real projects. Track your progress and celebrate milestones. Remember, expertise takes 10,000 hours—be patient and persistent!
+                </div>
+            </div>
+            
+            <div id="expertise" class="section">
+                <h2>Specialized Expertise Areas</h2>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">🎨</span>Artist & Talent Management</div>
+                    <div class="step-desc">Cultivate long-term relationships with diverse talent pools. Maintain updated databases of artists, their specialties, availability, and rates. Provide career guidance and support to recurring collaborators. Handle sensitive personal requirements with discretion.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">🌐</span>International Artist Casting</div>
+                    <div class="step-desc">Source talent globally while understanding regional market dynamics. Navigate visa processes for GCC countries (UAE, Saudi Arabia, Qatar, etc.). Coordinate with international agents and management companies. Manage currency exchanges and international payment systems.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">📋</span>Contract Negotiation & Budget Control</div>
+                    <div class="step-desc">Draft and review performance agreements ensuring legal compliance. Negotiate rider requirements, technical specs, and performance terms. Maintain budget spreadsheets tracking all talent-related costs. Identify opportunities for package deals and cost efficiencies.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">✈️</span>Artist Logistics & Coordination</div>
+                    <div class="step-desc">Manage complex travel itineraries across multiple time zones. Coordinate hotel arrangements meeting artist specifications. Arrange ground transportation, security if needed, and hospitality services. Handle equipment shipping for performers with special technical needs.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">🎭</span>Live Entertainment & Show Production</div>
+                    <div class="step-desc">Oversee all aspects of live performances from conception to execution. Collaborate with directors, choreographers, and technical designers. Coordinate rehearsal schedules and venue access. Manage show day operations ensuring seamless artist experience and audience satisfaction.</div>
+                </div>
+                
+                <div class="highlight">
+                    <strong>💡 Pro Tip:</strong> Success in the GCC market requires understanding the balance between international entertainment standards and local cultural expectations. Build trust through consistent delivery, cultural sensitivity, and professional excellence.
+                </div>
+            </div>
+            
+            <div id="va-guide" class="section">
+                <h2>Virtual Assistant Guide</h2>
+                
+                <div class="highlight">
+                    <strong>🌟 Remote Casting Assistant Role</strong><br>
+                    As a Virtual Assistant for Casting Managers, you provide essential remote support for talent acquisition, coordination, and administrative tasks. Master these areas to excel in this growing field.
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">💻</span>Essential Digital Tools</div>
+                    <div class="step-desc"><strong>Master these platforms:</strong> Zoom/Teams for virtual auditions, Asana/Trello for project management, Google Workspace for documentation, Slack for team communication, Casting Networks/Backstage for talent databases, DocuSign for contracts, and QuickBooks for budget tracking.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">🎥</span>Virtual Audition Management</div>
+                    <div class="step-desc">Set up and manage online audition platforms. Schedule video calls across time zones, record and organize audition tapes, create shareable audition links, manage technical requirements for performers, and compile feedback from decision-makers efficiently.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">🗂️</span>Database & Documentation</div>
+                    <div class="step-desc">Maintain comprehensive talent databases with headshots, reels, contact info, and availability. Organize contracts, invoices, and project files in cloud storage. Create standardized templates for common documents. Track all communications and maintain detailed logs.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">⏰</span>Time Zone Coordination</div>
+                    <div class="step-desc">Working in GCC hours while coordinating internationally requires strategic scheduling. Use tools like World Time Buddy, schedule communications during overlap hours (typically 2-6 PM Dubai time for Europe/US East Coast), and set clear response time expectations.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">📧</span>Communication Management</div>
+                    <div class="step-desc">Draft professional emails to artists and agents, manage inbox prioritization, handle initial talent inquiries, coordinate meeting schedules, send follow-ups and reminders, and maintain professional tone across all written communications.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">📊</span>Research & Talent Scouting</div>
+                    <div class="step-desc">Research potential artists on social media and professional platforms. Compile talent options with portfolio links, rate comparisons, and availability. Track industry trends and emerging talent. Create presentation decks for client review.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">✈️</span>Travel & Logistics Support</div>
+                    <div class="step-desc">Book flights comparing routes and costs, research hotel options meeting artist requirements, prepare detailed itineraries, track visa application deadlines, coordinate ground transportation, and maintain emergency contact lists.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title"><span class="icon">💰</span>Budget Tracking & Invoicing</div>
+                    <div class="step-desc">Maintain expense spreadsheets, process invoice payments, track pending payments, reconcile receipts, generate financial reports, and alert managers to budget concerns proactively.</div>
+                </div>
+                
+                <h2>VA Best Practices</h2>
+                
+                <div class="skill-item">
+                    <span class="skill-level essential">ESSENTIAL</span>
+                    <div class="step-title">Proactive Communication</div>
+                    <div class="step-desc">Don't wait to be asked—anticipate needs, provide daily updates, flag potential issues early, and maintain visibility on project status without micromanagement.</div>
+                </div>
+                
+                <div class="skill-item">
+                    <span class="skill-level essential">ESSENTIAL</span>
+                    <div class="step-title">Confidentiality & Discretion</div>
+                    <div class="step-desc">Handle sensitive artist information, contract terms, and budget details with absolute confidentiality. Use secure file sharing and never discuss client details publicly.</div>
+                </div>
+                
+                <div class="skill-item">
+                    <span class="skill-level advanced">ADVANCED</span>
+                    <div class="step-title">Self-Management & Initiative</div>
+                    <div class="step-desc">Work independently without constant supervision. Prioritize tasks effectively, meet deadlines consistently, solve minor problems autonomously, and know when to escalate issues.</div>
+                </div>
+                
+                <div class="skill-item">
+                    <span class="skill-level advanced">ADVANCED</span>
+                    <div class="step-title">Cultural Awareness</div>
+                    <div class="step-desc">Understand GCC business culture: respect for hierarchy, importance of relationships, appropriate communication timing during Ramadan, weekend schedules (Friday-Saturday in many GCC countries), and professional dress codes for video calls.</div>
+                </div>
+                
+                <div class="skill-item">
+                    <span class="skill-level expert">EXPERT</span>
+                    <div class="step-title">Systems & Process Optimization</div>
+                    <div class="step-desc">Continuously improve workflows, automate repetitive tasks, create efficiency templates, suggest new tools, and document standard operating procedures for team knowledge sharing.</div>
+                </div>
+                
+                <h2>Daily VA Workflow</h2>
+                
+                <div class="step">
+                    <span class="step-number">AM</span>
+                    <div class="step-title">Morning Routine (8-10 AM Dubai)</div>
+                    <div class="step-desc">Review overnight emails from international contacts, check project management boards for updates, prepare daily priority list, send morning status report to casting manager, and schedule any urgent calls.</div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">MD</span>
+                    <div class="step-title">Midday Tasks (10 AM-2 PM Dubai)</div>
+                    <div class="step-desc">Conduct talent research, update databases, coordinate with European contacts (morning their time), process documentation, manage virtual auditions, and handle booking confirmations.</div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">PM</span>
+                    <div class="step-title">Afternoon Focus (2-6 PM Dubai)</div>
+                    <div class="step-desc">Connect with US East Coast contacts (their morning), attend team meetings, finalize contracts and invoices, prepare next-day briefings, and organize files for easy handoff.</div>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">EOD</span>
+                    <div class="step-title">End of Day (6-7 PM Dubai)</div>
+                    <div class="step-desc">Send end-of-day summary, set up tomorrow's schedule, flag any urgent items needing overnight attention, update project trackers, and ensure all communications are responded to.</div>
+                </div>
+                
+                <div class="highlight">
+                    <strong>💼 Career Growth Path:</strong> Start as a VA handling admin tasks → Junior Coordinator managing specific projects → Casting Coordinator overseeing talent pools → Assistant Casting Manager with negotiation authority → Full Casting Manager leading productions.
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            © 2026 Casting Manager Professional Guide | GCC Region Focused
+        </footer>
+    </div>
+    
+    <script>
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.section');
+            const buttons = document.querySelectorAll('.tab-btn');
+            
+            sections.forEach(s => s.classList.remove('active'));
+            buttons.forEach(b => b.classList.remove('active'));
+            
+            document.getElementById(sectionId).classList.add('active');
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>
